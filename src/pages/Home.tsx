@@ -154,19 +154,19 @@ export default function Home() {
                 <SheetTrigger asChild>
                   <Button
                     variant="default"
-                    size="sm"
-                    className="lg:hidden h-9 px-3 sm:px-4 text-xs sm:text-sm font-semibold shadow-md hover:shadow-lg transition-all"
+                    size="default"
+                    className="lg:hidden h-11 sm:h-12 px-4 sm:px-5 text-sm sm:text-base font-semibold shadow-lg hover:shadow-xl transition-all touch-manipulation flex items-center gap-2"
                   >
-                    <SlidersHorizontal className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1.5" />
-                    Filters
+                    <SlidersHorizontal className="h-5 w-5" />
+                    <span>Filters</span>
                     {hasActiveFilters && (
-                      <span className="ml-1.5 px-1.5 py-0.5 bg-accent text-accent-foreground rounded-full text-xs font-bold">
+                      <span className="ml-1 px-2 py-0.5 bg-accent text-accent-foreground rounded-full text-xs font-bold min-w-[1.25rem] text-center">
                         {[selectedCategory !== 'All', sortBy !== 'relevance', priceRange[0] !== minPrice || priceRange[1] !== maxPrice].filter(Boolean).length}
                       </span>
                     )}
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="left" className="w-[85vw] sm:w-96 p-0">
+                <SheetContent side="left" className="w-[85vw] sm:w-96 p-0 overflow-hidden">
                   <AppSidebar
                     selectedCategory={selectedCategory}
                     onSelectCategory={setSelectedCategory}
