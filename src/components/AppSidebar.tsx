@@ -97,16 +97,16 @@ export const AppSidebar = ({
   };
 
   return (
-    <aside className={cn("h-full bg-card flex flex-col transition-all duration-300 relative", isMobileSheet ? "border-0" : "border-r", isCollapsed ? "w-16" : "w-full")}>
+    <aside className={cn("h-full bg-card flex flex-col transition-all duration-300 relative", isMobileSheet ? "border-0" : "", isCollapsed ? "w-16" : "w-full")}>
       {!isMobileSheet && (
         <Button
           variant="ghost"
           size="icon"
           onClick={onToggle}
-          className="absolute -right-3 top-4 z-50 h-8 w-8 rounded-full border-2 bg-card shadow-lg hover:bg-accent hover:scale-110 transition-all duration-200"
+          className="absolute -right-3 top-2 sm:top-3 md:top-4 z-50 h-7 w-7 sm:h-8 sm:w-8 rounded-full border-2 bg-card shadow-lg hover:bg-accent hover:scale-110 transition-all duration-200"
           title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
-          {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+          {isCollapsed ? <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> : <ChevronLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" />}
         </Button>
       )}
 
@@ -122,18 +122,18 @@ export const AppSidebar = ({
         </div>
       )}
 
-      <div className={cn("space-y-4 sm:space-y-6 flex-1 overflow-y-auto", isCollapsed ? "p-2" : isMobileSheet ? "p-4" : "p-4 lg:p-6")}>
+      <div className={cn("space-y-3 sm:space-y-4 md:space-y-5 lg:space-y-6 flex-1 overflow-y-auto", isCollapsed ? "p-1.5 sm:p-2" : isMobileSheet ? "p-4" : "p-3 sm:p-4 md:p-5 lg:p-6")}>
         {!isCollapsed && !isMobileSheet && (
           <div>
-            <h2 className="text-base sm:text-lg font-bold mb-3 sm:mb-4 flex items-center gap-2">
-              <User className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
-              Account
+            <h2 className="text-sm sm:text-base md:text-lg font-bold mb-2 sm:mb-3 md:mb-4 flex items-center gap-1.5 sm:gap-2">
+              <User className="h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5 text-primary" />
+              <span>Account</span>
             </h2>
-            <div className="space-y-1.5 sm:space-y-2">
+            <div className="space-y-1 sm:space-y-1.5 md:space-y-2">
               {user ? (
                 <>
-                  <div className="p-2.5 sm:p-3 rounded-lg bg-primary/5 border border-primary/20">
-                    <p className="text-xs sm:text-sm font-medium truncate">{user.email}</p>
+                  <div className="p-2 sm:p-2.5 md:p-3 rounded-lg bg-primary/5 border border-primary/20">
+                    <p className="text-[10px] sm:text-xs md:text-sm font-medium truncate">{user.email}</p>
                     {user.role === 'admin' && (
                       <Badge variant="secondary" className="mt-1.5 sm:mt-2 text-xs">
                         Admin
@@ -141,47 +141,47 @@ export const AppSidebar = ({
                     )}
                   </div>
                   <Link to="/" className="block">
-                    <Button variant="ghost" className="w-full justify-start h-9 text-sm" size="sm">
-                      <Home className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-2" />
-                      Home
+                    <Button variant="ghost" className="w-full justify-start h-8 sm:h-9 text-xs sm:text-sm" size="sm">
+                      <Home className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 mr-1.5 sm:mr-2" />
+                      <span>Home</span>
                     </Button>
                   </Link>
                   <Link to="/wishlist" className="block">
-                    <Button variant="ghost" className="w-full justify-start h-9 text-sm" size="sm">
-                      <Heart className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-2" />
-                      Wishlist
+                    <Button variant="ghost" className="w-full justify-start h-8 sm:h-9 text-xs sm:text-sm" size="sm">
+                      <Heart className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 mr-1.5 sm:mr-2" />
+                      <span>Wishlist</span>
                     </Button>
                   </Link>
                   {user.role === 'admin' && (
                     <Link to="/admin" className="block">
-                      <Button variant="ghost" className="w-full justify-start h-9 text-sm" size="sm">
-                        <Shield className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-2" />
-                        Admin Panel
+                      <Button variant="ghost" className="w-full justify-start h-8 sm:h-9 text-xs sm:text-sm" size="sm">
+                        <Shield className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 mr-1.5 sm:mr-2" />
+                        <span>Admin</span>
                       </Button>
                     </Link>
                   )}
                   <Button
                     variant="ghost"
-                    className="w-full justify-start h-9 text-sm text-destructive hover:text-destructive hover:bg-destructive/10"
+                    className="w-full justify-start h-8 sm:h-9 text-xs sm:text-sm text-destructive hover:text-destructive hover:bg-destructive/10"
                     size="sm"
                     onClick={handleLogout}
                   >
-                    <LogOut className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-2" />
-                    Logout
+                    <LogOut className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 mr-1.5 sm:mr-2" />
+                    <span>Logout</span>
                   </Button>
                 </>
               ) : (
                 <>
                   <Link to="/" className="block">
-                    <Button variant="ghost" className="w-full justify-start h-9 text-sm" size="sm">
-                      <Home className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-2" />
-                      Home
+                    <Button variant="ghost" className="w-full justify-start h-8 sm:h-9 text-xs sm:text-sm" size="sm">
+                      <Home className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 mr-1.5 sm:mr-2" />
+                      <span>Home</span>
                     </Button>
                   </Link>
                   <Link to="/login" className="block">
-                    <Button variant="default" className="w-full justify-start h-9 text-sm" size="sm">
-                      <User className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-2" />
-                      Login / Sign Up
+                    <Button variant="default" className="w-full justify-start h-8 sm:h-9 text-xs sm:text-sm" size="sm">
+                      <User className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 mr-1.5 sm:mr-2" />
+                      <span className="truncate">Login</span>
                     </Button>
                   </Link>
                 </>
@@ -244,49 +244,49 @@ export const AppSidebar = ({
           <div>
             {!isMobileSheet && (
               <>
-                <div className="flex items-center justify-between mb-3 sm:mb-4">
-                  <h2 className="text-base sm:text-lg font-bold flex items-center gap-2">
-                    <Filter className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
-                    Filters
+                <div className="flex items-center justify-between mb-2 sm:mb-3 md:mb-4">
+                  <h2 className="text-sm sm:text-base md:text-lg font-bold flex items-center gap-1.5 sm:gap-2">
+                    <Filter className="h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5 text-primary" />
+                    <span>Filters</span>
                   </h2>
                   {hasActiveFilters && (
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={onClearFilters}
-                      className="h-7 px-2 text-xs"
+                      className="h-6 sm:h-7 px-1.5 sm:px-2 text-[10px] sm:text-xs"
                     >
-                      <RotateCcw className="h-3 w-3 mr-1" />
-                      Reset
+                      <RotateCcw className="h-2.5 w-2.5 sm:h-3 sm:w-3 mr-0.5 sm:mr-1" />
+                      <span className="hidden sm:inline">Reset</span>
                     </Button>
                   )}
                 </div>
 
                 {hasActiveFilters && (
-                  <div className="mb-3 sm:mb-4 p-2.5 sm:p-3 bg-primary/5 rounded-lg border border-primary/20">
-                    <p className="text-xs sm:text-sm font-medium">
-                      {productCount} of {totalCount} products
+                  <div className="mb-2 sm:mb-3 md:mb-4 p-2 sm:p-2.5 md:p-3 bg-primary/5 rounded-lg border border-primary/20">
+                    <p className="text-[10px] sm:text-xs md:text-sm font-medium">
+                      {productCount} of {totalCount}
                     </p>
                   </div>
                 )}
               </>
             )}
 
-            <div className="space-y-4 sm:space-y-6">
+            <div className="space-y-3 sm:space-y-4 md:space-y-5 lg:space-y-6">
               <div>
-                <h3 className="text-sm sm:text-base font-semibold mb-2 sm:mb-3">Category</h3>
-                <div className="space-y-1">
+                <h3 className="text-xs sm:text-sm md:text-base font-semibold mb-1.5 sm:mb-2 md:mb-3">Category</h3>
+                <div className="space-y-0.5 sm:space-y-1">
                   {CATEGORIES.map((category) => (
                     <Button
                       key={category}
                       variant={(isMobileSheet ? tempCategory : selectedCategory) === category ? 'default' : 'ghost'}
-                      className="w-full justify-start text-xs sm:text-sm h-9 transition-all"
+                      className="w-full justify-start text-[10px] sm:text-xs md:text-sm h-7 sm:h-8 md:h-9 transition-all"
                       size="sm"
                       onClick={() => isMobileSheet ? setTempCategory(category) : onSelectCategory(category)}
                     >
-                      {category}
+                      <span className="truncate">{category}</span>
                       {(isMobileSheet ? tempCategory : selectedCategory) === category && (
-                        <Check className="h-3.5 w-3.5 ml-auto" />
+                        <Check className="h-3 w-3 sm:h-3.5 sm:w-3.5 ml-auto flex-shrink-0" />
                       )}
                     </Button>
                   ))}
@@ -296,10 +296,10 @@ export const AppSidebar = ({
               <Separator />
 
               <div>
-                <h3 className="text-sm sm:text-base font-semibold mb-2 sm:mb-3">Price Range</h3>
-                <div className="space-y-2.5 sm:space-y-3">
-                  <div className="px-2.5 py-2 sm:px-3 sm:py-2.5 bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg border border-primary/20">
-                    <p className="text-xs sm:text-sm font-bold text-primary text-center">
+                <h3 className="text-xs sm:text-sm md:text-base font-semibold mb-1.5 sm:mb-2 md:mb-3">Price Range</h3>
+                <div className="space-y-2 sm:space-y-2.5 md:space-y-3">
+                  <div className="px-2 py-1.5 sm:px-2.5 sm:py-2 md:px-3 md:py-2.5 bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg border border-primary/20">
+                    <p className="text-[10px] sm:text-xs md:text-sm font-bold text-primary text-center">
                       ₹{(isMobileSheet ? tempPriceRange[0] : priceRange[0]).toLocaleString()} - ₹{(isMobileSheet ? tempPriceRange[1] : priceRange[1]).toLocaleString()}
                     </p>
                   </div>
@@ -313,7 +313,7 @@ export const AppSidebar = ({
                       className="w-full"
                     />
                   </div>
-                  <div className="flex justify-between text-xs text-muted-foreground px-1">
+                  <div className="flex justify-between text-[10px] sm:text-xs text-muted-foreground px-1">
                     <span>₹{minPrice.toLocaleString()}</span>
                     <span>₹{maxPrice.toLocaleString()}</span>
                   </div>
@@ -323,16 +323,16 @@ export const AppSidebar = ({
               <Separator />
 
               <div>
-                <h3 className="text-sm sm:text-base font-semibold mb-2 sm:mb-3">Sort By</h3>
+                <h3 className="text-xs sm:text-sm md:text-base font-semibold mb-1.5 sm:mb-2 md:mb-3">Sort By</h3>
                 <Select value={isMobileSheet ? tempSortBy : sortBy} onValueChange={(v) => isMobileSheet ? setTempSortBy(v as typeof sortBy) : onSortChange(v as typeof sortBy)}>
-                  <SelectTrigger className="w-full h-10 text-sm">
+                  <SelectTrigger className="w-full h-8 sm:h-9 md:h-10 text-[10px] sm:text-xs md:text-sm">
                     <SelectValue placeholder="Sort products" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="relevance" className="text-sm">Relevance</SelectItem>
-                    <SelectItem value="price-asc" className="text-sm">Price: Low to High</SelectItem>
-                    <SelectItem value="price-desc" className="text-sm">Price: High to Low</SelectItem>
-                    <SelectItem value="discount-desc" className="text-sm">Discount: High to Low</SelectItem>
+                    <SelectItem value="relevance" className="text-[10px] sm:text-xs md:text-sm">Relevance</SelectItem>
+                    <SelectItem value="price-asc" className="text-[10px] sm:text-xs md:text-sm">Price: Low to High</SelectItem>
+                    <SelectItem value="price-desc" className="text-[10px] sm:text-xs md:text-sm">Price: High to Low</SelectItem>
+                    <SelectItem value="discount-desc" className="text-[10px] sm:text-xs md:text-sm">Discount: High to Low</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

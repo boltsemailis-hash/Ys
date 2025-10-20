@@ -126,8 +126,8 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/10">
       <Header onSearch={setSearchQuery} />
 
-      <div className="flex">
-        <div className={`hidden lg:block fixed left-0 top-[57px] bottom-0 z-40 overflow-y-auto transition-all duration-300 ${isSidebarCollapsed ? 'lg:w-16' : 'lg:w-64 xl:w-72'}`}>
+      <div className="flex min-h-[calc(100vh-57px)]">
+        <div className={`fixed left-0 top-[57px] bottom-0 z-40 overflow-y-auto transition-all duration-300 bg-card border-r ${isSidebarCollapsed ? 'w-16' : 'w-64 sm:w-72 md:w-64 lg:w-64 xl:w-72'}`}>
           <AppSidebar
             selectedCategory={selectedCategory}
             onSelectCategory={setSelectedCategory}
@@ -146,47 +146,10 @@ export default function Home() {
           />
         </div>
 
-        <main className={`flex-1 transition-all duration-300 ${isSidebarCollapsed ? 'lg:ml-16' : 'lg:ml-64 xl:ml-72'}`}>
-          <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4 lg:py-6 space-y-4 sm:space-y-6 lg:space-y-8">
+        <main className={`flex-1 transition-all duration-300 ${isSidebarCollapsed ? 'ml-16' : 'ml-64 sm:ml-72 md:ml-64 lg:ml-64 xl:ml-72'}`}>
+          <div className="container mx-auto px-3 sm:px-4 md:px-5 lg:px-6 py-3 sm:py-4 md:py-5 lg:py-6 space-y-4 sm:space-y-5 md:space-y-6 lg:space-y-8">
             <div className="flex items-center justify-between gap-2">
               <Breadcrumb />
-              <Sheet open={isMobileFilterOpen} onOpenChange={setIsMobileFilterOpen}>
-                <SheetTrigger asChild>
-                  <Button
-                    variant="default"
-                    size="default"
-                    className="lg:hidden h-11 sm:h-12 px-4 sm:px-5 text-sm sm:text-base font-semibold shadow-lg hover:shadow-xl transition-all touch-manipulation flex items-center gap-2"
-                  >
-                    <SlidersHorizontal className="h-5 w-5" />
-                    <span>Filters</span>
-                    {hasActiveFilters && (
-                      <span className="ml-1 px-2 py-0.5 bg-accent text-accent-foreground rounded-full text-xs font-bold min-w-[1.25rem] text-center">
-                        {[selectedCategory !== 'All', sortBy !== 'relevance', priceRange[0] !== minPrice || priceRange[1] !== maxPrice].filter(Boolean).length}
-                      </span>
-                    )}
-                  </Button>
-                </SheetTrigger>
-                <SheetContent side="left" className="w-[85vw] sm:w-96 p-0 overflow-hidden">
-                  <AppSidebar
-                    selectedCategory={selectedCategory}
-                    onSelectCategory={setSelectedCategory}
-                    sortBy={sortBy}
-                    onSortChange={setSortBy}
-                    priceRange={priceRange}
-                    onPriceRangeChange={setPriceRange}
-                    minPrice={minPrice}
-                    maxPrice={maxPrice}
-                    onClearFilters={clearAllFilters}
-                    hasActiveFilters={hasActiveFilters}
-                    productCount={filteredProducts.length}
-                    totalCount={products.length}
-                    isCollapsed={false}
-                    onToggle={() => {}}
-                    isMobileSheet={true}
-                    onMobileClose={() => setIsMobileFilterOpen(false)}
-                  />
-                </SheetContent>
-              </Sheet>
             </div>
 
             <AnimatedSection animation="scaleIn">
@@ -241,31 +204,31 @@ export default function Home() {
             )}
 
             <AnimatedSection>
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-3 sm:mb-4 lg:mb-6 gap-2 sm:gap-3">
-                <div className="flex items-center gap-2 sm:gap-3">
-                  <div className="h-6 w-1 sm:h-8 sm:w-1 lg:h-10 lg:w-1.5 bg-gradient-to-b from-primary to-accent rounded-full"></div>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2 sm:mb-3 md:mb-4 lg:mb-6 gap-2">
+                <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3">
+                  <div className="h-5 w-0.5 sm:h-6 sm:w-1 md:h-8 md:w-1 lg:h-10 lg:w-1.5 bg-gradient-to-b from-primary to-accent rounded-full flex-shrink-0"></div>
                   <div>
-                    <h2 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-heading font-bold text-foreground">
+                    <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-heading font-bold text-foreground">
                       {selectedCategory === 'All' ? 'All Products' : selectedCategory}
                     </h2>
-                    <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
+                    <p className="text-[10px] sm:text-xs md:text-sm text-muted-foreground mt-0.5">
                       {filteredProducts.length} {filteredProducts.length === 1 ? 'item' : 'items'}
                     </p>
                   </div>
                 </div>
               </div>
               {isLoading ? (
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2.5 sm:gap-3 lg:gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2 sm:gap-2.5 md:gap-3 lg:gap-4">
                   {Array.from({ length: 10 }).map((_, i) => (
-                    <div key={i} className="space-y-2 sm:space-y-3">
-                      <Skeleton className="w-full aspect-[3/4] rounded-xl sm:rounded-2xl" />
-                      <Skeleton className="h-3 sm:h-4 w-3/4" />
-                      <Skeleton className="h-3 sm:h-4 w-1/2" />
+                    <div key={i} className="space-y-1.5 sm:space-y-2 md:space-y-2.5">
+                      <Skeleton className="w-full aspect-[3/4] rounded-lg sm:rounded-xl lg:rounded-2xl" />
+                      <Skeleton className="h-2.5 sm:h-3 md:h-3.5 w-3/4" />
+                      <Skeleton className="h-2.5 sm:h-3 md:h-3.5 w-1/2" />
                     </div>
                   ))}
                 </div>
               ) : filteredProducts.length > 0 ? (
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2.5 sm:gap-3 lg:gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2 sm:gap-2.5 md:gap-3 lg:gap-4">
                   {filteredProducts.map((product, index) => (
                     <div
                       key={product.id}
