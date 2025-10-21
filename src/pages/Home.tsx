@@ -126,34 +126,26 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/10">
       <Header onSearch={setSearchQuery} />
 
-      <div className="flex min-h-[calc(100vh-57px)]">
-        <div className={`fixed left-0 top-[57px] bottom-0 z-40 overflow-y-auto transition-all duration-300 bg-card border-r ${isSidebarCollapsed ? 'w-16' : 'w-64 sm:w-72 md:w-64 lg:w-64 xl:w-72'}`}>
-          <AppSidebar
-            selectedCategory={selectedCategory}
-            onSelectCategory={setSelectedCategory}
-            sortBy={sortBy}
-            onSortChange={setSortBy}
-            priceRange={priceRange}
-            onPriceRangeChange={setPriceRange}
-            minPrice={minPrice}
-            maxPrice={maxPrice}
-            onClearFilters={clearAllFilters}
-            hasActiveFilters={hasActiveFilters}
-            productCount={filteredProducts.length}
-            totalCount={products.length}
-            isCollapsed={isSidebarCollapsed}
-            onToggle={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-          />
-        </div>
-
-        <main className={`flex-1 transition-all duration-300 ${isSidebarCollapsed ? 'ml-16' : 'ml-64 sm:ml-72 md:ml-64 lg:ml-64 xl:ml-72'}`}>
-          <div className="container mx-auto px-3 sm:px-4 md:px-5 lg:px-6 py-3 sm:py-4 md:py-5 lg:py-6 space-y-4 sm:space-y-5 md:space-y-6 lg:space-y-8">
+      <Sheet open={isMobileFilterOpen} onOpenChange={setIsMobileFilterOpen}>
+        <main className="w-full">
+          <div className="w-full px-3 py-3 space-y-4">
             <div className="flex items-center justify-between gap-2">
-              <Breadcrumb />
+              <SheetTrigger asChild>
+                <Button variant="outline" size="sm" className="rounded-full h-8 px-3 text-xs">
+                  <SlidersHorizontal className="h-3 w-3 mr-1.5" />
+                  Filters
+                  {hasActiveFilters && (
+                    <span className="ml-1.5 h-1.5 w-1.5 bg-primary rounded-full" />
+                  )}
+                </Button>
+              </SheetTrigger>
+              <div className="text-xs text-muted-foreground">
+                {filteredProducts.length} of {products.length}
+              </div>
             </div>
 
             <AnimatedSection animation="scaleIn">
-              <div className="rounded-xl sm:rounded-2xl overflow-hidden">
+              <div className="rounded-xl overflow-hidden">
                 <HeroCarousel />
               </div>
             </AnimatedSection>
@@ -168,27 +160,27 @@ export default function Home() {
 
             {trendingProducts.length > 0 && selectedCategory === 'All' && !searchQuery && (
               <AnimatedSection>
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-3 sm:mb-4 lg:mb-6 gap-2 sm:gap-3">
-                  <div className="flex items-center gap-2 sm:gap-3">
-                    <div className="h-6 w-1 sm:h-8 sm:w-1 lg:h-10 lg:w-1.5 bg-gradient-to-b from-primary to-accent rounded-full"></div>
+                <div className="flex items-center justify-between mb-3 gap-2">
+                  <div className="flex items-center gap-2">
+                    <div className="h-6 w-1 bg-gradient-to-b from-primary to-accent rounded-full"></div>
                     <div>
-                      <h2 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-heading font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                      <h2 className="text-base font-heading font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                         Trending Now
                       </h2>
-                      <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">Most popular items</p>
+                      <p className="text-[10px] text-muted-foreground mt-0.5">Most popular items</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 py-1 sm:px-3 sm:py-1.5 lg:px-4 lg:py-2 bg-gradient-to-r from-primary/10 to-accent/10 rounded-full border border-primary/20 self-start sm:self-auto">
-                    <div className="h-1.5 w-1.5 sm:h-2 sm:w-2 bg-accent rounded-full animate-pulse"></div>
-                    <span className="text-xs sm:text-sm font-semibold text-primary">Hot Picks</span>
+                  <div className="flex items-center gap-1 px-2 py-0.5 bg-gradient-to-r from-primary/10 to-accent/10 rounded-full border border-primary/20">
+                    <div className="h-1.5 w-1.5 bg-accent rounded-full animate-pulse"></div>
+                    <span className="text-[10px] font-semibold text-primary">Hot</span>
                   </div>
                 </div>
                 <div className="relative">
-                  <div className="flex gap-2.5 sm:gap-3 lg:gap-4 overflow-x-auto pb-3 sm:pb-4 scrollbar-hide snap-x snap-mandatory -mx-3 sm:-mx-4 px-3 sm:px-4">
+                  <div className="flex gap-2.5 overflow-x-auto pb-3 scrollbar-hide snap-x snap-mandatory -mx-3 px-3">
                     {trendingProducts.map((product, index) => (
                       <div
                         key={product.id}
-                        className="min-w-[140px] xs:min-w-[150px] sm:min-w-[180px] md:min-w-[200px] lg:min-w-[220px] snap-start"
+                        className="min-w-[140px] snap-start"
                         style={{
                           animationDelay: `${index * 100}ms`,
                           animation: 'fade-in 0.5s ease-out forwards'
@@ -198,37 +190,37 @@ export default function Home() {
                       </div>
                     ))}
                   </div>
-                  <div className="absolute top-0 right-0 w-16 sm:w-32 h-full bg-gradient-to-l from-background to-transparent pointer-events-none"></div>
+                  <div className="absolute top-0 right-0 w-12 h-full bg-gradient-to-l from-background to-transparent pointer-events-none"></div>
                 </div>
               </AnimatedSection>
             )}
 
             <AnimatedSection>
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2 sm:mb-3 md:mb-4 lg:mb-6 gap-2">
-                <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3">
-                  <div className="h-5 w-0.5 sm:h-6 sm:w-1 md:h-8 md:w-1 lg:h-10 lg:w-1.5 bg-gradient-to-b from-primary to-accent rounded-full flex-shrink-0"></div>
+              <div className="flex items-center justify-between mb-2 gap-2">
+                <div className="flex items-center gap-1.5">
+                  <div className="h-5 w-0.5 bg-gradient-to-b from-primary to-accent rounded-full flex-shrink-0"></div>
                   <div>
-                    <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-heading font-bold text-foreground">
+                    <h2 className="text-sm font-heading font-bold text-foreground">
                       {selectedCategory === 'All' ? 'All Products' : selectedCategory}
                     </h2>
-                    <p className="text-[10px] sm:text-xs md:text-sm text-muted-foreground mt-0.5">
+                    <p className="text-[10px] text-muted-foreground mt-0.5">
                       {filteredProducts.length} {filteredProducts.length === 1 ? 'item' : 'items'}
                     </p>
                   </div>
                 </div>
               </div>
               {isLoading ? (
-                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2 sm:gap-2.5 md:gap-3 lg:gap-4">
+                <div className="grid grid-cols-2 gap-2.5">
                   {Array.from({ length: 10 }).map((_, i) => (
-                    <div key={i} className="space-y-1.5 sm:space-y-2 md:space-y-2.5">
-                      <Skeleton className="w-full aspect-[3/4] rounded-lg sm:rounded-xl lg:rounded-2xl" />
-                      <Skeleton className="h-2.5 sm:h-3 md:h-3.5 w-3/4" />
-                      <Skeleton className="h-2.5 sm:h-3 md:h-3.5 w-1/2" />
+                    <div key={i} className="space-y-1.5">
+                      <Skeleton className="w-full aspect-[3/4] rounded-lg" />
+                      <Skeleton className="h-2.5 w-3/4" />
+                      <Skeleton className="h-2.5 w-1/2" />
                     </div>
                   ))}
                 </div>
               ) : filteredProducts.length > 0 ? (
-                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2 sm:gap-2.5 md:gap-3 lg:gap-4">
+                <div className="grid grid-cols-2 gap-2.5">
                   {filteredProducts.map((product, index) => (
                     <div
                       key={product.id}
@@ -243,12 +235,12 @@ export default function Home() {
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-8 sm:py-12 lg:py-16 animate-fade-in">
-                  <div className="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 mx-auto mb-3 sm:mb-4 rounded-full bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center">
-                    <span className="text-xl sm:text-2xl lg:text-3xl">🔍</span>
+                <div className="text-center py-8 animate-fade-in">
+                  <div className="w-14 h-14 mx-auto mb-3 rounded-full bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center">
+                    <span className="text-xl">🔍</span>
                   </div>
-                  <h3 className="text-base sm:text-lg lg:text-xl font-heading font-bold mb-1.5 sm:mb-2">No products found</h3>
-                  <p className="text-muted-foreground text-xs sm:text-sm lg:text-base mb-3 sm:mb-4 px-4">
+                  <h3 className="text-sm font-heading font-bold mb-1.5">No products found</h3>
+                  <p className="text-muted-foreground text-xs mb-3 px-4">
                     Try adjusting your filters
                   </p>
                   <Button
@@ -259,7 +251,7 @@ export default function Home() {
                       setSortBy('relevance');
                     }}
                     variant="outline"
-                    className="rounded-full px-4 sm:px-6 lg:px-8 h-9 sm:h-10 text-xs sm:text-sm"
+                    className="rounded-full px-4 h-8 text-xs"
                   >
                     Clear All Filters
                   </Button>
@@ -268,7 +260,45 @@ export default function Home() {
             </AnimatedSection>
           </div>
         </main>
-      </div>
+
+        <SheetContent side="left" className="w-[280px] p-0">
+          <div className="flex items-center justify-between p-4 border-b">
+            <h2 className="text-base font-semibold">Filters</h2>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsMobileFilterOpen(false)}
+              className="h-8 w-8"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
+          <div className="overflow-y-auto h-[calc(100vh-80px)]">
+            <AppSidebar
+              selectedCategory={selectedCategory}
+              onSelectCategory={(cat) => {
+                setSelectedCategory(cat);
+                setIsMobileFilterOpen(false);
+              }}
+              sortBy={sortBy}
+              onSortChange={setSortBy}
+              priceRange={priceRange}
+              onPriceRangeChange={setPriceRange}
+              minPrice={minPrice}
+              maxPrice={maxPrice}
+              onClearFilters={() => {
+                clearAllFilters();
+                setIsMobileFilterOpen(false);
+              }}
+              hasActiveFilters={hasActiveFilters}
+              productCount={filteredProducts.length}
+              totalCount={products.length}
+              isCollapsed={false}
+              onToggle={() => {}}
+            />
+          </div>
+        </SheetContent>
+      </Sheet>
 
       <ProductDetailModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />
       <Footer />

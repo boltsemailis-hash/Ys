@@ -120,11 +120,12 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground antialiased;
-    /* Mobile-first font size */
     font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    touch-action: manipulation;
   }
 
-  /* Mobile-first typography */
   @media (min-width: 640px) {
     body {
       font-size: 16px;
@@ -264,22 +265,27 @@ All colors MUST be HSL.
     transform: scale(1.05);
   }
 
-  /* Mobile-first touch targets */
   button,
   [role="button"],
   input[type="submit"],
   input[type="button"] {
-    min-height: 44px;
-    min-width: 44px;
+    -webkit-tap-highlight-color: transparent;
   }
 
-  /* Mobile-first focus styles */
   *:focus-visible {
     @apply outline-2 outline-offset-2 outline-primary;
   }
 
-  /* Mobile-first text selection */
   ::selection {
     @apply bg-primary/20 text-primary-foreground;
+  }
+
+  img {
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+
+  * {
+    -webkit-overflow-scrolling: touch;
   }
 }

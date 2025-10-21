@@ -42,33 +42,32 @@ export const Header = ({ onSearch }: HeaderProps) => {
 
   return (
     <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-xl border-b shadow-sm">
-      <div className="px-3 sm:px-4 py-2 sm:py-2.5">
-        <div className="flex items-center gap-2 sm:gap-3">
-          <Link to="/" className="flex-shrink-0 group transition-all hover:scale-105">
-            <h1 className="text-sm sm:text-base md:text-lg lg:text-xl font-heading font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-              <span className="hidden xs:inline sm:hidden md:inline">Priya's Collection</span>
-              <span className="xs:hidden sm:inline md:hidden">Priya's</span>
+      <div className="px-3 py-2">
+        <div className="flex items-center gap-2">
+          <Link to="/" className="flex-shrink-0 group transition-all active:scale-95">
+            <h1 className="text-sm font-heading font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+              Priya's
             </h1>
           </Link>
 
-          <div className="flex-1 max-w-xl md:max-w-2xl">
+          <div className="flex-1">
             <div className="relative">
-              <Search className="absolute left-2 sm:left-2.5 md:left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4" />
+              <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-muted-foreground h-3 w-3" />
               <Input
                 type="search"
                 placeholder="Search..."
                 value={searchQuery}
                 onChange={(e) => handleSearch(e.target.value)}
-                className="pl-7 sm:pl-8 md:pl-9 h-8 sm:h-9 md:h-10 rounded-full border focus-visible:border-primary transition-all text-xs sm:text-sm w-full"
+                className="pl-7 h-8 rounded-full border focus-visible:border-primary transition-all text-xs w-full"
               />
             </div>
           </div>
 
-          <div className="flex items-center gap-0.5 sm:gap-1 flex-shrink-0">
+          <div className="flex items-center gap-0.5 flex-shrink-0">
             {user && (
               <Link to="/wishlist">
-                <Button variant="ghost" size="icon" className="relative hover:bg-primary/10 transition-all rounded-full h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10">
-                  <Heart className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 text-primary" />
+                <Button variant="ghost" size="icon" className="relative hover:bg-primary/10 transition-all rounded-full h-8 w-8">
+                  <Heart className="h-3.5 w-3.5 text-primary" />
                 </Button>
               </Link>
             )}
@@ -77,9 +76,9 @@ export const Header = ({ onSearch }: HeaderProps) => {
               size="icon"
               aria-label="Toggle theme"
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="rounded-full h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10 hover:bg-primary/10"
+              className="rounded-full h-8 w-8 hover:bg-primary/10"
             >
-              {theme === 'dark' ? <Sun className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4" /> : <Moon className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4" />}
+              {theme === 'dark' ? <Sun className="h-3.5 w-3.5" /> : <Moon className="h-3.5 w-3.5" />}
             </Button>
           </div>
         </div>

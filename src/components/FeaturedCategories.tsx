@@ -11,21 +11,21 @@ const tiles = [
 export const FeaturedCategories = () => {
     return (
         <section className="animate-fade-in" id="categories">
-            <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-3">
-                    <div className="h-10 w-1.5 bg-gradient-to-b from-primary to-accent rounded-full"></div>
+            <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                    <div className="h-6 w-1 bg-gradient-to-b from-primary to-accent rounded-full"></div>
                     <div>
-                        <h2 className="text-3xl font-heading font-bold text-foreground">Featured Categories</h2>
-                        <p className="text-sm text-muted-foreground mt-0.5">Explore our curated selections</p>
+                        <h2 className="text-base font-heading font-bold text-foreground">Featured Categories</h2>
+                        <p className="text-[10px] text-muted-foreground mt-0.5">Explore our curated selections</p>
                     </div>
                 </div>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5 auto-rows-[120px] md:auto-rows-[160px]">
+            <div className="grid grid-cols-2 gap-2.5 auto-rows-[100px]">
                 {tiles.map((tile, i) => (
                     <Link
                         to={`/?cat=${encodeURIComponent(tile.key)}`}
                         key={tile.key}
-                        className={`relative overflow-hidden rounded-2xl border-2 group ${tile.cols} ${tile.rows} shadow-lg`}
+                        className={`relative overflow-hidden rounded-xl border-2 group ${tile.cols} ${tile.rows} shadow-md active:scale-[0.98] transition-transform`}
                         style={{ animationDelay: `${i * 60}ms` }}
                     >
                         <img
@@ -35,8 +35,8 @@ export const FeaturedCategories = () => {
                             loading="lazy"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-                        <div className="absolute bottom-3 left-3">
-                            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-background/90 text-foreground border">
+                        <div className="absolute bottom-2 left-2">
+                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-background/90 text-foreground border">
                                 {tile.key}
                             </span>
                         </div>
