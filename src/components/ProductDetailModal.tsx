@@ -106,15 +106,15 @@ export const ProductDetailModal = ({ product, onClose }: ProductDetailModalProps
 
   return (
     <Dialog open={!!product} onOpenChange={onClose}>
-      <DialogContent className="max-w-full max-h-[95vh] overflow-hidden p-0 w-full">
-        <div className="flex flex-col h-full max-h-[90vh] overflow-y-auto">
-          <div className="w-full p-3 bg-gradient-to-br from-muted/30 to-muted/10">
-            <div className="space-y-2">
-              <div className="relative aspect-[3/4] bg-white rounded-xl overflow-hidden shadow-xl">
+      <DialogContent className="max-w-2xl max-h-[92vh] overflow-hidden p-0 bg-white shadow-2xl rounded-2xl">
+        <div className="flex flex-col h-full max-h-[92vh] overflow-y-auto">
+          <div className="w-full px-6 pt-6 pb-4 bg-gradient-to-b from-slate-50/50 to-white">
+            <div className="space-y-4">
+              <div className="relative aspect-square bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 max-w-md mx-auto">
                 <img
                   src={product.images[currentImageIndex]}
                   alt={product.name}
-                  className="w-full h-full object-contain p-2"
+                  className="w-full h-full object-contain p-6 transition-opacity duration-300"
                   onError={(e) => {
                     (e.currentTarget as HTMLImageElement).src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0xNzUgMTUwSDIyNVYyNTBIMTc1VjE1MFoiIGZpbGw9IiM5Q0EzQUYiLz4KPHBhdGggZD0iTTIwMCAxMjVMMjI1IDE1MEwxNzUgMTUwTDIwMCAxMjVaIiBmaWxsPSIjOUNBM0FGIi8+Cjx0ZXh0IHg9IjIwMCIgeT0iMjgwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNkI3MjgwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiPkltYWdlIFVuYXZhaWxhYmxlPC90ZXh0Pgo8L3N2Zz4K';
                   }}
@@ -125,38 +125,38 @@ export const ProductDetailModal = ({ product, onClose }: ProductDetailModalProps
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="absolute left-2 top-1/2 -translate-y-1/2 h-8 w-8 bg-white/90 hover:bg-white shadow-lg backdrop-blur-sm active:scale-95 transition-transform"
+                      className="absolute left-3 top-1/2 -translate-y-1/2 h-9 w-9 bg-white/95 hover:bg-white shadow-md backdrop-blur-sm transition-all duration-200 hover:scale-105 active:scale-95 rounded-full"
                       onClick={prevImage}
                     >
-                      <ChevronLeft className="h-4 w-4" />
+                      <ChevronLeft className="h-5 w-5 text-slate-700" />
                     </Button>
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 bg-white/90 hover:bg-white shadow-lg backdrop-blur-sm active:scale-95 transition-transform"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 h-9 w-9 bg-white/95 hover:bg-white shadow-md backdrop-blur-sm transition-all duration-200 hover:scale-105 active:scale-95 rounded-full"
                       onClick={nextImage}
                     >
-                      <ChevronRight className="h-4 w-4" />
+                      <ChevronRight className="h-5 w-5 text-slate-700" />
                     </Button>
                   </>
                 )}
 
                 {product.images.length > 1 && (
-                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/70 text-white px-2.5 py-0.5 rounded-full text-xs font-medium">
+                  <div className="absolute bottom-3 left-1/2 -translate-x-1/2 bg-black/80 text-white px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm">
                     {currentImageIndex + 1} / {product.images.length}
                   </div>
                 )}
               </div>
 
               {product.images.length > 1 && (
-                <div className="flex gap-1.5 overflow-x-auto pb-2 scrollbar-hide">
+                <div className="flex gap-2 overflow-x-auto pb-2 px-1 justify-center scrollbar-hide">
                   {product.images.map((image, index) => (
                     <button
                       key={index}
                       onClick={() => setCurrentImageIndex(index)}
-                      className={`flex-shrink-0 w-12 h-12 rounded-md overflow-hidden border-2 transition-all active:scale-95 ${currentImageIndex === index
-                        ? 'border-primary shadow-lg scale-105'
-                        : 'border-muted hover:border-primary/50'
+                      className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all duration-200 hover:scale-105 active:scale-95 ${currentImageIndex === index
+                        ? 'border-slate-900 shadow-md ring-2 ring-slate-900/10'
+                        : 'border-slate-200 hover:border-slate-400'
                         }`}
                     >
                       <img
@@ -171,112 +171,122 @@ export const ProductDetailModal = ({ product, onClose }: ProductDetailModalProps
             </div>
           </div>
 
-          <div className="w-full p-3 flex flex-col">
-            <div className="space-y-3">
-              <div className="space-y-1">
-                <h2 className="text-lg font-bold text-foreground leading-tight">{product.name}</h2>
-                <div className="flex items-center gap-1.5 flex-wrap">
-                  <Badge variant="secondary" className="text-[10px]">
-                    {product.category}
-                  </Badge>
-                  {product.fabric && (
-                    <Badge variant="outline" className="text-[10px]">
-                      {product.fabric}
+          <div className="w-full px-6 pb-6 flex flex-col bg-white">
+            <div className="space-y-5">
+              <div className="space-y-3 pt-2">
+                <div className="space-y-2">
+                  <h2 className="text-2xl font-semibold text-slate-900 leading-snug tracking-tight">{product.name}</h2>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <Badge variant="secondary" className="text-xs px-3 py-1 rounded-full font-medium bg-slate-100 text-slate-700 border-0">
+                      {product.category}
+                    </Badge>
+                    {product.fabric && (
+                      <Badge variant="outline" className="text-xs px-3 py-1 rounded-full font-medium border-slate-200 text-slate-600">
+                        {product.fabric}
+                      </Badge>
+                    )}
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3 pt-1">
+                  <div className="flex items-baseline gap-2.5">
+                    <span className="text-3xl font-bold text-slate-900">₹{product.discountPrice}</span>
+                    {product.discountPercent > 0 && (
+                      <span className="text-base text-slate-400 line-through font-medium">₹{product.originalPrice}</span>
+                    )}
+                  </div>
+                  {product.discountPercent > 0 && (
+                    <Badge className="bg-gradient-to-r from-rose-500 to-pink-500 text-white text-xs px-3 py-1 rounded-full font-semibold shadow-sm">
+                      {product.discountPercent}% OFF
+                    </Badge>
+                  )}
+                </div>
+
+                <div className="flex items-center pt-1">
+                  {product.stock ? (
+                    <Badge className="bg-emerald-500 text-white flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full font-medium shadow-sm">
+                      <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div>
+                      In Stock
+                    </Badge>
+                  ) : (
+                    <Badge variant="destructive" className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full font-medium">
+                      <div className="w-1.5 h-1.5 bg-white rounded-full"></div>
+                      Out of Stock
                     </Badge>
                   )}
                 </div>
               </div>
 
-              <div className="space-y-1.5">
-                <div className="flex items-baseline gap-2">
-                  <span className="text-xl font-bold text-primary">₹{product.discountPrice}</span>
-                  {product.discountPercent > 0 && (
-                    <span className="text-sm text-muted-foreground line-through">₹{product.originalPrice}</span>
-                  )}
-                </div>
-                {product.discountPercent > 0 && (
-                  <Badge className="bg-gradient-to-r from-red-500 to-pink-500 text-white text-[10px] px-2 py-0.5">
-                    {product.discountPercent}% OFF
-                  </Badge>
-                )}
-              </div>
+              <div className="w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
 
-              <div className="flex items-center gap-2">
-                {product.stock ? (
-                  <Badge className="bg-green-500 text-white flex items-center gap-1 text-[10px]">
-                    <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div>
-                    In Stock
-                  </Badge>
-                ) : (
-                  <Badge variant="destructive" className="flex items-center gap-1 text-[10px]">
-                    <div className="w-1.5 h-1.5 bg-white rounded-full"></div>
-                    Out of Stock
-                  </Badge>
-                )}
-              </div>
-
-              <div className="space-y-1.5">
-                <h3 className="text-sm font-semibold">Description</h3>
-                <p className="text-xs text-muted-foreground leading-relaxed">{product.description}</p>
+              <div className="space-y-2">
+                <h3 className="text-sm font-semibold text-slate-900 uppercase tracking-wide">Description</h3>
+                <p className="text-sm text-slate-600 leading-relaxed">{product.description}</p>
               </div>
 
               {product.sizes && product.sizes.length > 0 && (
-                <div className="space-y-1.5">
-                  <h3 className="text-sm font-semibold">Available Sizes</h3>
-                  <div className="flex gap-1.5 flex-wrap">
-                    {product.sizes.map((size, index) => (
-                      <div
-                        key={index}
-                        className="px-2 py-0.5 bg-primary/10 text-primary border border-primary/20 rounded-full text-[10px] font-medium"
-                      >
-                        {size}
-                      </div>
-                    ))}
+                <>
+                  <div className="w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
+                  <div className="space-y-3">
+                    <h3 className="text-sm font-semibold text-slate-900 uppercase tracking-wide">Available Sizes</h3>
+                    <div className="flex gap-2 flex-wrap">
+                      {product.sizes.map((size, index) => (
+                        <div
+                          key={index}
+                          className="px-4 py-2 bg-slate-50 text-slate-700 border border-slate-200 rounded-lg text-xs font-semibold hover:bg-slate-100 hover:border-slate-300 transition-colors"
+                        >
+                          {size}
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                </>
               )}
 
               {product.colors && product.colors.length > 0 && (
-                <div className="space-y-1.5">
-                  <h3 className="text-sm font-semibold">Available Colors</h3>
-                  <div className="flex gap-1.5 flex-wrap">
-                    {product.colors.map((color, index) => (
-                      <div
-                        key={index}
-                        className="w-6 h-6 rounded-full border-2 border-muted shadow-sm"
-                        style={{ backgroundColor: color }}
-                        title={color}
-                      />
-                    ))}
+                <>
+                  <div className="w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
+                  <div className="space-y-3">
+                    <h3 className="text-sm font-semibold text-slate-900 uppercase tracking-wide">Available Colors</h3>
+                    <div className="flex gap-2.5 flex-wrap">
+                      {product.colors.map((color, index) => (
+                        <div
+                          key={index}
+                          className="w-9 h-9 rounded-full border-2 border-slate-200 shadow-sm hover:scale-110 hover:shadow-md transition-all duration-200 ring-2 ring-white cursor-pointer"
+                          style={{ backgroundColor: color }}
+                          title={color}
+                        />
+                      ))}
+                    </div>
                   </div>
-                </div>
+                </>
               )}
             </div>
 
-            <div className="space-y-2 pt-3 border-t mt-3">
-              <div className="flex gap-2">
+            <div className="space-y-3 pt-6 mt-2">
+              <div className="flex gap-3">
                 <Button
                   onClick={toggleWishlist}
                   variant={isWishlisted ? "default" : "outline"}
-                  className="flex-1 h-9 text-xs font-semibold"
+                  className="flex-1 h-11 text-sm font-semibold rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-95 shadow-sm"
                   disabled={!product.stock}
                 >
-                  <Heart className={`mr-1 h-3.5 w-3.5 ${isWishlisted ? 'fill-current' : ''}`} />
-                  {isWishlisted ? 'Saved' : 'Wishlist'}
+                  <Heart className={`mr-2 h-4 w-4 ${isWishlisted ? 'fill-current' : ''}`} />
+                  {isWishlisted ? 'Saved' : 'Add to Wishlist'}
                 </Button>
                 <Button
                   onClick={handleShare}
                   variant="outline"
-                  className="h-9 px-3 text-xs"
+                  className="h-11 px-5 text-sm rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-95 shadow-sm"
                   disabled={!product.stock}
                 >
-                  <Share2 className="h-3.5 w-3.5" />
+                  <Share2 className="h-4 w-4" />
                 </Button>
               </div>
 
               {!product.stock && (
-                <div className="text-center py-2 bg-muted/50 rounded-lg">
-                  <p className="text-[10px] text-muted-foreground font-medium">This item is currently out of stock</p>
+                <div className="text-center py-3 bg-slate-50 rounded-xl border border-slate-200">
+                  <p className="text-xs text-slate-600 font-medium">This item is currently out of stock</p>
                 </div>
               )}
             </div>
