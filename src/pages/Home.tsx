@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Header } from '@/components/Header';
 import { HeroCarousel } from '@/components/HeroCarousel';
 import { ProductCard } from '@/components/ProductCard';
@@ -26,6 +26,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+  const navigate = useNavigate();
 
   // Derive price bounds from data
   const { minPrice, maxPrice } = useMemo(() => {
@@ -269,8 +270,13 @@ export default function Home() {
             <AppSidebar
               selectedCategory={selectedCategory}
               onSelectCategory={(cat) => {
-                setSelectedCategory(cat);
-                setIsMobileFilterOpen(false);
+                if (cat !== 'All') {
+                  navigate(`/category/${encodeURIComponent(cat)}`);
+                  setIsMobileFilterOpen(false);
+                } else {
+                  setSelectedCategory(cat);
+                  setIsMobileFilterOpen(false);
+                }
               }}
               sortBy={sortBy}
               onSortChange={setSortBy}

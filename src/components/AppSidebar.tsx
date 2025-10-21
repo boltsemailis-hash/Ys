@@ -1,12 +1,10 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { Heart, User, LogOut, Home, Shield, Filter, RotateCcw, ChevronLeft, ChevronRight, Check } from 'lucide-react';
+import { Filter, RotateCcw, ChevronLeft, ChevronRight, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
-import { getCurrentUser, saveCurrentUser, CATEGORIES } from '@/lib/mockData';
+import { CATEGORIES } from '@/lib/mockData';
 import { useState, useEffect } from 'react';
-import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 
 interface AppSidebarProps {
@@ -46,23 +44,9 @@ export const AppSidebar = ({
   isMobileSheet = false,
   onMobileClose,
 }: AppSidebarProps) => {
-  const [user, setUser] = useState(getCurrentUser());
-  const navigate = useNavigate();
   const [tempPriceRange, setTempPriceRange] = useState<[number, number]>(priceRange);
   const [tempCategory, setTempCategory] = useState(selectedCategory);
   const [tempSortBy, setTempSortBy] = useState(sortBy);
-
-  useEffect(() => {
-    const handleStorageChange = () => {
-      setUser(getCurrentUser());
-    };
-    window.addEventListener('storage', handleStorageChange);
-    const interval = setInterval(handleStorageChange, 500);
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-      clearInterval(interval);
-    };
-  }, []);
 
   useEffect(() => {
     setTempPriceRange(priceRange);
@@ -89,12 +73,6 @@ export const AppSidebar = ({
     }
   };
 
-  const handleLogout = () => {
-    saveCurrentUser(null);
-    setUser(null);
-    navigate('/');
-    window.dispatchEvent(new Event('storage'));
-  };
 
   return (
     <aside className={cn("h-full bg-card flex flex-col transition-all duration-300 relative", isMobileSheet ? "border-0" : "", isCollapsed ? "w-16" : "w-full")}>
@@ -123,123 +101,6 @@ export const AppSidebar = ({
       )}
 
       <div className={cn("space-y-3 sm:space-y-4 md:space-y-5 lg:space-y-6 flex-1 overflow-y-auto", isCollapsed ? "p-1.5 sm:p-2" : isMobileSheet ? "p-4" : "p-3 sm:p-4 md:p-5 lg:p-6")}>
-        {!isCollapsed && !isMobileSheet && (
-          <div>
-            <h2 className="text-sm sm:text-base md:text-lg font-bold mb-2 sm:mb-3 md:mb-4 flex items-center gap-1.5 sm:gap-2">
-              <User className="h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5 text-primary" />
-              <span>Account</span>
-            </h2>
-            <div className="space-y-1 sm:space-y-1.5 md:space-y-2">
-              {user ? (
-                <>
-                  <div className="p-2 sm:p-2.5 md:p-3 rounded-lg bg-primary/5 border border-primary/20">
-                    <p className="text-[10px] sm:text-xs md:text-sm font-medium truncate">{user.email}</p>
-                    {user.role === 'admin' && (
-                      <Badge variant="secondary" className="mt-1.5 sm:mt-2 text-xs">
-                        Admin
-                      </Badge>
-                    )}
-                  </div>
-                  <Link to="/" className="block">
-                    <Button variant="ghost" className="w-full justify-start h-8 sm:h-9 text-xs sm:text-sm" size="sm">
-                      <Home className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 mr-1.5 sm:mr-2" />
-                      <span>Home</span>
-                    </Button>
-                  </Link>
-                  <Link to="/wishlist" className="block">
-                    <Button variant="ghost" className="w-full justify-start h-8 sm:h-9 text-xs sm:text-sm" size="sm">
-                      <Heart className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 mr-1.5 sm:mr-2" />
-                      <span>Wishlist</span>
-                    </Button>
-                  </Link>
-                  {user.role === 'admin' && (
-                    <Link to="/admin" className="block">
-                      <Button variant="ghost" className="w-full justify-start h-8 sm:h-9 text-xs sm:text-sm" size="sm">
-                        <Shield className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 mr-1.5 sm:mr-2" />
-                        <span>Admin</span>
-                      </Button>
-                    </Link>
-                  )}
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-start h-8 sm:h-9 text-xs sm:text-sm text-destructive hover:text-destructive hover:bg-destructive/10"
-                    size="sm"
-                    onClick={handleLogout}
-                  >
-                    <LogOut className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 mr-1.5 sm:mr-2" />
-                    <span>Logout</span>
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Link to="/" className="block">
-                    <Button variant="ghost" className="w-full justify-start h-8 sm:h-9 text-xs sm:text-sm" size="sm">
-                      <Home className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 mr-1.5 sm:mr-2" />
-                      <span>Home</span>
-                    </Button>
-                  </Link>
-                  <Link to="/login" className="block">
-                    <Button variant="default" className="w-full justify-start h-8 sm:h-9 text-xs sm:text-sm" size="sm">
-                      <User className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 mr-1.5 sm:mr-2" />
-                      <span className="truncate">Login</span>
-                    </Button>
-                  </Link>
-                </>
-              )}
-            </div>
-          </div>
-        )}
-
-        {isCollapsed && !isMobileSheet && (
-          <div className="space-y-2">
-            {user ? (
-              <>
-                <Link to="/" title="Home">
-                  <Button variant="ghost" size="icon" className="w-full h-10">
-                    <Home className="h-4 w-4" />
-                  </Button>
-                </Link>
-                <Link to="/wishlist" title="Wishlist">
-                  <Button variant="ghost" size="icon" className="w-full h-10">
-                    <Heart className="h-4 w-4" />
-                  </Button>
-                </Link>
-                {user.role === 'admin' && (
-                  <Link to="/admin" title="Admin">
-                    <Button variant="ghost" size="icon" className="w-full h-10">
-                      <Shield className="h-4 w-4" />
-                    </Button>
-                  </Link>
-                )}
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={handleLogout}
-                  className="w-full h-10 text-destructive hover:text-destructive"
-                  title="Logout"
-                >
-                  <LogOut className="h-4 w-4" />
-                </Button>
-              </>
-            ) : (
-              <>
-                <Link to="/" title="Home">
-                  <Button variant="ghost" size="icon" className="w-full h-10">
-                    <Home className="h-4 w-4" />
-                  </Button>
-                </Link>
-                <Link to="/login" title="Login">
-                  <Button variant="default" size="icon" className="w-full h-10">
-                    <User className="h-4 w-4" />
-                  </Button>
-                </Link>
-              </>
-            )}
-          </div>
-        )}
-
-        {!isCollapsed && !isMobileSheet && <Separator />}
-
         {!isCollapsed ? (
           <div>
             {!isMobileSheet && (

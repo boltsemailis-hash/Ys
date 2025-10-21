@@ -33,124 +33,107 @@ export const CATEGORIES = [
   'Dupattas',
 ] as const;
 
-export const mockProducts: Product[] = [
-  {
-    id: '1',
-    name: 'Elegant Rani Pink Kurti',
-    category: 'Kurti',
-    fabric: 'Cotton',
-    description: 'Beautiful hand-embroidered kurti perfect for festive occasions. Features intricate threadwork and comfortable cotton fabric.',
-    originalPrice: 2499,
-    discountPrice: 1799,
-    discountPercent: 28,
-    stock: true,
-    trending: true,
-    images: ['https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800', 'https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=800'],
-    sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-    colors: ['#C2185B', '#FF7043', '#FFD54F'],
-  },
-  {
-    id: '2',
-    name: 'Royal Blue Kurta Set',
-    category: 'Kurta Sets',
-    fabric: 'Silk Blend',
-    description: 'Complete kurta set with palazzo and dupatta. Perfect for weddings and festive celebrations.',
-    originalPrice: 3999,
-    discountPrice: 2999,
-    discountPercent: 25,
-    stock: true,
-    trending: true,
-    images: ['https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=800', 'https://images.unsplash.com/photo-1611916656173-875e4277bea6?w=800'],
-    sizes: ['S', 'M', 'L', 'XL'],
-    colors: ['#1565C0', '#C2185B', '#4A148C'],
-  },
-  {
-    id: '3',
-    name: 'Traditional Silk Saree',
-    category: 'Sarees',
-    fabric: 'Pure Silk',
-    description: 'Luxurious silk saree with golden border. Timeless elegance for special occasions.',
-    originalPrice: 8999,
-    discountPrice: 6499,
-    discountPercent: 28,
-    stock: true,
-    images: ['https://images.unsplash.com/photo-1610030469046-98bf6c561251?w=800', 'https://images.unsplash.com/photo-1583391265492-eb4a7b5d03f3?w=800'],
-    sizes: ['Free Size'],
-    colors: ['#D32F2F', '#C2185B', '#4A148C'],
-  },
-  {
-    id: '4',
-    name: 'Designer Lehenga Set',
-    category: 'Lehengas',
-    fabric: 'Georgette',
-    description: 'Stunning lehenga choli with intricate embroidery and sequin work. Perfect for weddings.',
-    originalPrice: 12999,
-    discountPrice: 9999,
-    discountPercent: 23,
-    stock: true,
-    trending: true,
-    images: ['https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=800', 'https://images.unsplash.com/photo-1610030469046-98bf6c561251?w=800'],
-    sizes: ['S', 'M', 'L', 'XL'],
-    colors: ['#C2185B', '#FFD54F', '#1565C0'],
-  },
-  {
-    id: '5',
-    name: 'Cotton Palazzo Pants',
-    category: 'Palazzos',
-    fabric: 'Cotton',
-    description: 'Comfortable cotton palazzo pants with elastic waist. Perfect for daily wear.',
-    originalPrice: 899,
-    discountPrice: 599,
-    discountPercent: 33,
-    stock: true,
-    images: ['https://images.unsplash.com/photo-1594633313593-bab3825d0caf?w=800'],
-    sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-    colors: ['#212121', '#C2185B', '#1565C0'],
-  },
-  {
-    id: '6',
-    name: 'Ready to Wear Saree',
-    category: 'Ready to Wear Sarees',
-    fabric: 'Georgette',
-    description: 'Pre-stitched saree for easy draping. Perfect for working women and quick occasions.',
-    originalPrice: 3499,
-    discountPrice: 2499,
-    discountPercent: 29,
-    stock: false,
-    images: ['https://images.unsplash.com/photo-1583391265841-83afd6cbc10e?w=800'],
-    sizes: ['Free Size'],
-    colors: ['#C2185B', '#FF7043'],
-  },
-  {
-    id: '7',
-    name: 'Embroidered Dupatta',
-    category: 'Dupattas',
-    fabric: 'Chiffon',
-    description: 'Lightweight chiffon dupatta with delicate embroidery. Pairs perfectly with any outfit.',
-    originalPrice: 799,
-    discountPrice: 499,
-    discountPercent: 38,
-    stock: true,
-    images: ['https://images.unsplash.com/photo-1617519019082-2964fcdc29ad?w=800'],
-    sizes: ['Free Size'],
-    colors: ['#FFD54F', '#C2185B', '#FF7043'],
-  },
-  {
-    id: '8',
-    name: 'Indo Western Gown',
-    category: 'Indo Western Dress',
-    fabric: 'Net & Silk',
-    description: 'Fusion wear gown combining traditional and modern elements. Perfect for parties.',
-    originalPrice: 5999,
-    discountPrice: 4499,
-    discountPercent: 25,
-    stock: true,
-    trending: true,
-    images: ['https://images.unsplash.com/photo-1583391265855-4768eadf3e80?w=800'],
-    sizes: ['S', 'M', 'L', 'XL'],
-    colors: ['#C2185B', '#1565C0', '#4A148C'],
-  },
-];
+const generateProducts = (): Product[] => {
+  const baseImages = [
+    'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800',
+    'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=800',
+    'https://images.unsplash.com/photo-1610030469046-98bf6c561251?w=800',
+    'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=800',
+    'https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=800',
+    'https://images.unsplash.com/photo-1611916656173-875e4277bea6?w=800',
+    'https://images.unsplash.com/photo-1583391265492-eb4a7b5d03f3?w=800',
+    'https://images.unsplash.com/photo-1594633313593-bab3825d0caf?w=800',
+    'https://images.unsplash.com/photo-1583391265841-83afd6cbc10e?w=800',
+    'https://images.unsplash.com/photo-1617519019082-2964fcdc29ad?w=800',
+    'https://images.unsplash.com/photo-1583391265855-4768eadf3e80?w=800',
+  ];
+
+  const colors = ['#C2185B', '#FF7043', '#FFD54F', '#1565C0', '#4A148C', '#D32F2F', '#212121'];
+  const fabrics = ['Cotton', 'Silk', 'Georgette', 'Chiffon', 'Net', 'Rayon', 'Linen', 'Crepe'];
+  const sizes = ['S', 'M', 'L', 'XL', 'XXL'];
+
+  const products: Product[] = [];
+  let id = 1;
+
+  const categoryData = {
+    'Kurti': {
+      names: ['Elegant', 'Floral', 'Printed', 'Embroidered', 'Designer', 'Casual', 'Festive', 'Traditional', 'Modern', 'Classic'],
+      priceRange: [1299, 2999],
+      fabrics: ['Cotton', 'Rayon', 'Georgette', 'Crepe'],
+    },
+    'Kurta Sets': {
+      names: ['Royal', 'Premium', 'Designer', 'Embellished', 'Classic', 'Festive', 'Wedding', 'Party', 'Ethnic', 'Traditional'],
+      priceRange: [2499, 5999],
+      fabrics: ['Silk Blend', 'Cotton', 'Georgette', 'Rayon'],
+    },
+    'Sarees': {
+      names: ['Traditional', 'Silk', 'Designer', 'Banarasi', 'Kanjivaram', 'Wedding', 'Party', 'Festive', 'Classic', 'Royal'],
+      priceRange: [4999, 14999],
+      fabrics: ['Pure Silk', 'Georgette', 'Chiffon', 'Cotton Silk'],
+    },
+    'Ready to Wear Sarees': {
+      names: ['Pre-stitched', 'Ready', 'Easy Drape', 'Modern', 'Convenient', 'Quick Wear', 'Working', 'Contemporary', 'Stylish', 'Fusion'],
+      priceRange: [1999, 4999],
+      fabrics: ['Georgette', 'Chiffon', 'Silk Blend', 'Crepe'],
+    },
+    'Blouses': {
+      names: ['Embroidered', 'Designer', 'Plain', 'Printed', 'Fancy', 'Simple', 'Traditional', 'Modern', 'Stylish', 'Elegant'],
+      priceRange: [599, 1999],
+      fabrics: ['Cotton', 'Silk', 'Georgette', 'Brocade'],
+    },
+    'Lehengas': {
+      names: ['Designer', 'Wedding', 'Bridal', 'Party', 'Festive', 'Embroidered', 'Sequin', 'Heavy', 'Royal', 'Grand'],
+      priceRange: [7999, 24999],
+      fabrics: ['Georgette', 'Net', 'Silk', 'Velvet'],
+    },
+    'Palazzos': {
+      names: ['Cotton', 'Printed', 'Plain', 'Designer', 'Casual', 'Comfortable', 'Flowy', 'Wide Leg', 'Trendy', 'Modern'],
+      priceRange: [499, 1499],
+      fabrics: ['Cotton', 'Rayon', 'Georgette', 'Crepe'],
+    },
+    'Indo Western Dress': {
+      names: ['Fusion', 'Contemporary', 'Modern', 'Stylish', 'Party', 'Cocktail', 'Designer', 'Trendy', 'Chic', 'Elegant'],
+      priceRange: [3499, 8999],
+      fabrics: ['Net', 'Silk', 'Georgette', 'Crepe'],
+    },
+    'Dupattas': {
+      names: ['Embroidered', 'Silk', 'Chiffon', 'Designer', 'Plain', 'Printed', 'Fancy', 'Traditional', 'Modern', 'Lightweight'],
+      priceRange: [399, 1999],
+      fabrics: ['Chiffon', 'Georgette', 'Silk', 'Net'],
+    },
+  };
+
+  Object.entries(categoryData).forEach(([category, data]) => {
+    for (let i = 0; i < 35; i++) {
+      const namePrefix = data.names[i % data.names.length];
+      const colorName = ['Pink', 'Blue', 'Red', 'Green', 'Yellow', 'Purple', 'Black', 'White', 'Orange', 'Maroon'][i % 10];
+      const fabric = data.fabrics[i % data.fabrics.length];
+      const basePrice = data.priceRange[0] + Math.floor((data.priceRange[1] - data.priceRange[0]) * (i / 35));
+      const discountPercent = 15 + Math.floor(Math.random() * 30);
+      const discountPrice = Math.floor(basePrice * (1 - discountPercent / 100));
+
+      products.push({
+        id: String(id++),
+        name: `${namePrefix} ${colorName} ${category}`,
+        category,
+        fabric,
+        description: `Beautiful ${fabric} ${category.toLowerCase()} perfect for all occasions. Features premium quality material and excellent craftsmanship.`,
+        originalPrice: basePrice,
+        discountPrice,
+        discountPercent,
+        stock: i % 10 !== 0,
+        trending: i < 4,
+        images: [baseImages[i % baseImages.length], baseImages[(i + 1) % baseImages.length]],
+        sizes: category === 'Sarees' || category === 'Ready to Wear Sarees' || category === 'Dupattas' ? ['Free Size'] : sizes,
+        colors: [colors[i % colors.length], colors[(i + 1) % colors.length], colors[(i + 2) % colors.length]],
+      });
+    }
+  });
+
+  return products;
+};
+
+export const mockProducts: Product[] = generateProducts();
 
 export const heroImages = [
   {
@@ -173,7 +156,6 @@ export const heroImages = [
   },
 ];
 
-// LocalStorage utilities
 const STORAGE_KEYS = {
   PRODUCTS: 'priya_products',
   WISHLIST: 'priya_wishlist',
