@@ -10,6 +10,8 @@ import Home from "./pages/Home";
 import Wishlist from "./pages/Wishlist";
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
+import Settings from "./pages/Settings";
+import Category from "./pages/Category";
 import NotFound from "./pages/NotFound";
 import { initializeMockData } from "./lib/mockData";
 
@@ -35,9 +37,11 @@ const App = () => {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/category/:category" element={<Category />} />
               <Route path="/wishlist" element={<Wishlist />} />
               <Route path="/login" element={<Login />} />
               <Route path="/admin" element={<Admin />} />
+              <Route path="/settings" element={<Settings />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

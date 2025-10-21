@@ -1,9 +1,8 @@
-import { Search, Moon, Sun, Heart } from 'lucide-react';
+import { Search, Heart, Settings } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useState, useEffect } from 'react';
-import { useTheme } from 'next-themes';
 import { getCurrentUser } from '@/lib/mockData';
 
 interface HeaderProps {
@@ -14,7 +13,6 @@ interface HeaderProps {
 export const Header = ({ onSearch }: HeaderProps) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [user, setUser] = useState(getCurrentUser());
-  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -45,12 +43,12 @@ export const Header = ({ onSearch }: HeaderProps) => {
       <div className="px-3 py-2">
         <div className="flex items-center gap-2">
           <Link to="/" className="flex-shrink-0 group transition-all active:scale-95">
-            <h1 className="text-sm font-heading font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-              Priya's
+            <h1 className="text-base font-heading font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent whitespace-nowrap">
+              Priya's Collection
             </h1>
           </Link>
 
-          <div className="flex-1">
+          <div className="flex-1 max-w-xs">
             <div className="relative">
               <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-muted-foreground h-3 w-3" />
               <Input
@@ -71,15 +69,11 @@ export const Header = ({ onSearch }: HeaderProps) => {
                 </Button>
               </Link>
             )}
-            <Button
-              variant="ghost"
-              size="icon"
-              aria-label="Toggle theme"
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="rounded-full h-8 w-8 hover:bg-primary/10"
-            >
-              {theme === 'dark' ? <Sun className="h-3.5 w-3.5" /> : <Moon className="h-3.5 w-3.5" />}
-            </Button>
+            <Link to="/settings">
+              <Button variant="ghost" size="icon" className="relative hover:bg-primary/10 transition-all rounded-full h-8 w-8">
+                <Settings className="h-3.5 w-3.5" />
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

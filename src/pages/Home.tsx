@@ -8,8 +8,7 @@ import { Product, getProducts } from '@/lib/mockData';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Footer } from '@/components/Footer';
-import { FeaturedCategories } from '@/components/FeaturedCategories';
-import { PromoBanner } from '@/components/PromoBanner';
+import { Categories } from '@/components/Categories';
 import { AnimatedSection } from '@/components/AnimatedSection';
 import { Breadcrumb } from '@/components/Breadcrumb';
 import { AppSidebar } from '@/components/AppSidebar';
@@ -139,9 +138,6 @@ export default function Home() {
                   )}
                 </Button>
               </SheetTrigger>
-              <div className="text-xs text-muted-foreground">
-                {filteredProducts.length} of {products.length}
-              </div>
             </div>
 
             <AnimatedSection animation="scaleIn">
@@ -151,11 +147,7 @@ export default function Home() {
             </AnimatedSection>
 
             <AnimatedSection>
-              <PromoBanner />
-            </AnimatedSection>
-
-            <AnimatedSection>
-              <FeaturedCategories />
+              <Categories />
             </AnimatedSection>
 
             {trendingProducts.length > 0 && selectedCategory === 'All' && !searchQuery && (
