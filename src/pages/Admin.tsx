@@ -29,7 +29,7 @@ export default function Admin() {
   const [sortField, setSortField] = useState<'name' | 'category' | 'discountPrice' | 'stock'>('name');
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc');
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(8);
+  const [pageSize, setPageSize] = useState(30);
   const [uploadedImages, setUploadedImages] = useState<string[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const navigate = useNavigate();
@@ -303,9 +303,8 @@ export default function Admin() {
       </header>
 
       <main className="container mx-auto px-3 sm:px-4 lg:px-8 py-4 sm:py-6 lg:py-8">
-        {/* Stats Cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
-          <Card className="border-l-4 border-l-primary hover:shadow-lg transition-shadow">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
+          <Card className="border-l-4 border-l-primary hover:shadow-lg transition-all hover:scale-105">
             <CardContent className="p-3 sm:p-4 lg:p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -319,7 +318,7 @@ export default function Admin() {
             </CardContent>
           </Card>
 
-          <Card className="border-l-4 border-l-green-500 hover:shadow-lg transition-shadow">
+          <Card className="border-l-4 border-l-green-500 hover:shadow-lg transition-all hover:scale-105">
             <CardContent className="p-3 sm:p-4 lg:p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -333,7 +332,7 @@ export default function Admin() {
             </CardContent>
           </Card>
 
-          <Card className="border-l-4 border-l-destructive hover:shadow-lg transition-shadow">
+          <Card className="border-l-4 border-l-destructive hover:shadow-lg transition-all hover:scale-105">
             <CardContent className="p-3 sm:p-4 lg:p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -347,7 +346,7 @@ export default function Admin() {
             </CardContent>
           </Card>
 
-          <Card className="border-l-4 border-l-accent hover:shadow-lg transition-shadow">
+          <Card className="border-l-4 border-l-accent hover:shadow-lg transition-all hover:scale-105">
             <CardContent className="p-3 sm:p-4 lg:p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -403,7 +402,7 @@ export default function Admin() {
                     <SelectValue placeholder="Page size" />
                   </SelectTrigger>
                   <SelectContent>
-                    {[8, 12, 16, 24].map(size => (
+                    {[10, 20, 30, 50].map(size => (
                       <SelectItem key={size} value={String(size)}>{size} / page</SelectItem>
                     ))}
                   </SelectContent>
@@ -422,11 +421,11 @@ export default function Admin() {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="rounded-md border overflow-hidden">
+            <div className="rounded-md border overflow-x-auto">
               <Table>
                 <TableHeader>
                   <TableRow className="bg-muted/50">
-                    <TableHead className="font-semibold">Image</TableHead>
+                    <TableHead className="font-semibold w-20">Image</TableHead>
                     <TableHead className="font-semibold cursor-pointer select-none" onClick={() => toggleSort('name')}>
                       <div className="inline-flex items-center gap-1">Name {sortField !== 'name' ? <ArrowUpDown className="h-3 w-3" /> : (sortDir === 'asc' ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />)}</div>
                     </TableHead>
@@ -535,17 +534,58 @@ export default function Admin() {
               </Table>
             </div>
 
-            {/* Pagination */}
-            <div className="flex items-center justify-between mt-4 text-sm text-muted-foreground">
-              <div>
-                Showing <span className="font-medium text-foreground">{totalItems === 0 ? 0 : startIndex + 1}-{endIndex}</span> of <span className="font-medium text-foreground">{totalItems}</span>
+            {totalItems > 0 && (
+              <div className="flex flex-col sm:flex-row items-center justify-between mt-4 gap-3 text-sm text-muted-foreground">
+                <div className="text-center sm:text-left">
+                  Showing <span className="font-medium text-foreground">{startIndex + 1}-{endIndex}</span> of <span className="font-medium text-foreground">{totalItems}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={safePage === 1}
+                    onClick={() => setPage(safePage - 1)}
+                    className="h-9"
+                  >
+                    Previous
+                  </Button>
+                  <div className="flex items-center gap-1">
+                    {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                      let pageNum;
+                      if (totalPages <= 5) {
+                        pageNum = i + 1;
+                      } else if (safePage <= 3) {
+                        pageNum = i + 1;
+                      } else if (safePage >= totalPages - 2) {
+                        pageNum = totalPages - 4 + i;
+                      } else {
+                        pageNum = safePage - 2 + i;
+                      }
+                      return (
+                        <Button
+                          key={pageNum}
+                          variant={safePage === pageNum ? "default" : "outline"}
+                          size="sm"
+                          onClick={() => setPage(pageNum)}
+                          className="h-9 w-9 p-0"
+                        >
+                          {pageNum}
+                        </Button>
+                      );
+                    })}
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={safePage === totalPages}
+                    onClick={() => setPage(safePage + 1)}
+                    className="h-9"
+                  >
+                    Next
+                  </Button>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <Button variant="outline" size="sm" disabled={safePage === 1} onClick={() => setPage(safePage - 1)}>Previous</Button>
-                <div className="px-2">Page {safePage} of {totalPages}</div>
-                <Button variant="outline" size="sm" disabled={safePage === totalPages} onClick={() => setPage(safePage + 1)}>Next</Button>
-              </div>
-            </div>
+            )}
           </CardContent>
         </Card>
       </main>

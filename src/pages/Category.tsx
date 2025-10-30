@@ -7,7 +7,7 @@ import { ProductCard } from '@/components/ProductCard';
 import { ProductDetailModal } from '@/components/ProductDetailModal';
 import { Slider } from '@/components/ui/slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { ArrowLeft, Check, RotateCcw, SlidersHorizontal } from 'lucide-react';
+import { ArrowLeft, Check, RotateCcw, SlidersHorizontal, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { Footer } from '@/components/Footer';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -31,6 +31,8 @@ export default function Category() {
   const [tempPriceRange, setTempPriceRange] = useState<[number, number]>([0, 0]);
   const [tempSortBy, setTempSortBy] = useState(sortBy);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const PRODUCTS_PER_PAGE = 30;
 
   useEffect(() => {
     const allProducts = getProducts();
@@ -61,6 +63,7 @@ export default function Category() {
     if (sortBy === 'discount-desc') sorted.sort((a, b) => b.discountPercent - a.discountPercent);
 
     setFilteredProducts(sorted);
+    setCurrentPage(1);
   }, [products, priceRange, sortBy]);
 
   const handleApplyFilters = () => {
@@ -81,6 +84,11 @@ export default function Category() {
     sortBy !== 'relevance' ||
     priceRange[0] !== minPrice ||
     priceRange[1] !== maxPrice;
+
+  const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE);
+  const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
+  const endIndex = startIndex + PRODUCTS_PER_PAGE;
+  const currentProducts = filteredProducts.slice(startIndex, endIndex);
 
   if (!category) {
     navigate('/');
@@ -214,20 +222,72 @@ export default function Category() {
               ))}
             </div>
           ) : filteredProducts.length > 0 ? (
-            <div className="grid grid-cols-2 gap-2.5">
-              {filteredProducts.map((product, index) => (
-                <div
-                  key={product.id}
-                  className="animate-fade-in"
-                  style={{
-                    animationDelay: `${index * 50}ms`,
-                    animation: 'fade-in 0.5s ease-out forwards'
-                  }}
-                >
-                  <ProductCard product={product} onSelect={setSelectedProduct} />
+            <>
+              <div className="grid grid-cols-2 gap-2.5">
+                {currentProducts.map((product, index) => (
+                  <div
+                    key={product.id}
+                    className="animate-fade-in"
+                    style={{
+                      animationDelay: `${index * 50}ms`,
+                      animation: 'fade-in 0.5s ease-out forwards'
+                    }}
+                  >
+                    <ProductCard product={product} onSelect={setSelectedProduct} />
+                  </div>
+                ))}
+              </div>
+
+              {totalPages > 1 && (
+                <div className="flex items-center justify-center gap-2 mt-6">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                    disabled={currentPage === 1}
+                    className="h-9 px-3"
+                  >
+                    <ChevronLeft className="h-4 w-4 mr-1" />
+                    Previous
+                  </Button>
+                  <div className="flex items-center gap-1">
+                    {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                      let pageNum;
+                      if (totalPages <= 5) {
+                        pageNum = i + 1;
+                      } else if (currentPage <= 3) {
+                        pageNum = i + 1;
+                      } else if (currentPage >= totalPages - 2) {
+                        pageNum = totalPages - 4 + i;
+                      } else {
+                        pageNum = currentPage - 2 + i;
+                      }
+                      return (
+                        <Button
+                          key={pageNum}
+                          variant={currentPage === pageNum ? "default" : "outline"}
+                          size="sm"
+                          onClick={() => setCurrentPage(pageNum)}
+                          className="h-9 w-9 p-0"
+                        >
+                          {pageNum}
+                        </Button>
+                      );
+                    })}
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                    disabled={currentPage === totalPages}
+                    className="h-9 px-3"
+                  >
+                    Next
+                    <ChevronRight className="h-4 w-4 ml-1" />
+                  </Button>
                 </div>
-              ))}
-            </div>
+              )}
+            </>
           ) : (
             <div className="text-center py-8 animate-fade-in">
               <div className="w-14 h-14 mx-auto mb-3 rounded-full bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center">
