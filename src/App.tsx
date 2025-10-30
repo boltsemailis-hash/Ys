@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import Settings from "./pages/Settings";
 import Category from "./pages/Category";
+import ProductDetail from "./pages/ProductDetail";
 import NotFound from "./pages/NotFound";
 import { initializeMockData } from "./lib/mockData";
 
@@ -38,6 +39,7 @@ const App = () => {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/category/:category" element={<Category />} />
+              <Route path="/product/:id" element={<ProductDetail />} />
               <Route path="/wishlist" element={<Wishlist />} />
               <Route path="/login" element={<Login />} />
               <Route path="/admin" element={<Admin />} />

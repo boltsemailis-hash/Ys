@@ -42,10 +42,14 @@ export const ProductCard = ({ product, onSelect }: ProductCardProps) => {
     toast.success(isWishlisted ? 'Removed from wishlist' : 'Added to wishlist');
   };
 
+  const handleClick = () => {
+    navigate(`/product/${product.id}`);
+  };
+
   return (
     <Card
       className="group cursor-pointer overflow-hidden hover:shadow-lg transition-all duration-300 active:scale-[0.98] rounded-lg border-2 hover:border-primary/20 animate-fade-in"
-      onClick={() => onSelect(product)}
+      onClick={handleClick}
       aria-label={product.name}
     >
       <CardContent className="p-0">

@@ -4,7 +4,6 @@ import { Product, getProducts } from '@/lib/mockData';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ProductCard } from '@/components/ProductCard';
-import { ProductDetailModal } from '@/components/ProductDetailModal';
 import { Slider } from '@/components/ui/slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ArrowLeft, Check, RotateCcw, SlidersHorizontal, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -17,7 +16,6 @@ export default function Category() {
   const navigate = useNavigate();
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [sortBy, setSortBy] = useState<'relevance' | 'price-asc' | 'price-desc' | 'discount-desc'>('relevance');
   const [isLoading, setIsLoading] = useState(true);
 
@@ -233,7 +231,7 @@ export default function Category() {
                       animation: 'fade-in 0.5s ease-out forwards'
                     }}
                   >
-                    <ProductCard product={product} onSelect={setSelectedProduct} />
+                    <ProductCard product={product} onSelect={() => {}} />
                   </div>
                 ))}
               </div>
@@ -309,7 +307,6 @@ export default function Category() {
         </div>
       </main>
 
-      <ProductDetailModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />
       <Footer />
     </div>
   );

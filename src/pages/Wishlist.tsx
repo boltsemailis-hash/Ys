@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '@/components/Header';
 import { ProductCard } from '@/components/ProductCard';
-import { ProductDetailModal } from '@/components/ProductDetailModal';
 import { Footer } from '@/components/Footer';
 import { Breadcrumb } from '@/components/Breadcrumb';
 import { Product, getProducts, getWishlist, getCurrentUser } from '@/lib/mockData';
@@ -11,7 +10,6 @@ import { Heart } from 'lucide-react';
 
 export default function Wishlist() {
   const [wishlistProducts, setWishlistProducts] = useState<Product[]>([]);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const navigate = useNavigate();
   const user = getCurrentUser();
 
@@ -71,7 +69,7 @@ export default function Wishlist() {
                 className="animate-fade-in"
                 style={{ animationDelay: `${index * 50}ms` }}
               >
-                <ProductCard product={product} onSelect={setSelectedProduct} />
+                <ProductCard product={product} onSelect={() => {}} />
               </div>
             ))}
           </div>
@@ -93,7 +91,6 @@ export default function Wishlist() {
         )}
       </main>
 
-      <ProductDetailModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />
       <Footer />
     </div>
   );

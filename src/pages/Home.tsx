@@ -3,14 +3,12 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Header } from '@/components/Header';
 import { HeroCarousel } from '@/components/HeroCarousel';
 import { ProductCard } from '@/components/ProductCard';
-import { ProductDetailModal } from '@/components/ProductDetailModal';
 import { Product, getProducts } from '@/lib/mockData';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Footer } from '@/components/Footer';
 import { Categories } from '@/components/Categories';
 import { AnimatedSection } from '@/components/AnimatedSection';
-import { Breadcrumb } from '@/components/Breadcrumb';
 import { AppSidebar } from '@/components/AppSidebar';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { SlidersHorizontal, X, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -20,7 +18,6 @@ export default function Home() {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [sortBy, setSortBy] = useState<'relevance' | 'price-asc' | 'price-desc' | 'discount-desc'>('relevance');
   const [searchParams, setSearchParams] = useSearchParams();
   const [isLoading, setIsLoading] = useState(true);
@@ -187,7 +184,7 @@ export default function Home() {
                           animation: 'fade-in 0.5s ease-out forwards'
                         }}
                       >
-                        <ProductCard product={product} onSelect={setSelectedProduct} />
+                        <ProductCard product={product} onSelect={() => {}} />
                       </div>
                     ))}
                   </div>
@@ -232,7 +229,7 @@ export default function Home() {
                           animation: 'fade-in 0.5s ease-out forwards'
                         }}
                       >
-                        <ProductCard product={product} onSelect={setSelectedProduct} />
+                        <ProductCard product={product} onSelect={() => {}} />
                       </div>
                     ))}
                   </div>
@@ -358,7 +355,6 @@ export default function Home() {
         </SheetContent>
       </Sheet>
 
-      <ProductDetailModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />
       <Footer />
     </div>
   );
