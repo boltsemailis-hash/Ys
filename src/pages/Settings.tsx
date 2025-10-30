@@ -1,4 +1,4 @@
-import { Moon, Sun, User, LogOut, Shield, ArrowLeft, ChevronRight, Bell, Heart, Package, MapPin, CreditCard, HelpCircle, Info, Mail } from 'lucide-react';
+import { Moon, Sun, User, LogOut, Shield, ArrowLeft, ChevronRight, Heart, HelpCircle, Info, Mail } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useTheme } from 'next-themes';
@@ -10,7 +10,6 @@ import { Footer } from '@/components/Footer';
 export default function Settings() {
   const { theme, setTheme } = useTheme();
   const [user, setUser] = useState(getCurrentUser());
-  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -83,21 +82,6 @@ export default function Settings() {
                   onCheckedChange={(checked) => setTheme(checked ? 'dark' : 'light')}
                 />
               </button>
-
-              <div className="h-[0.5px] bg-border/40 mx-4" />
-
-              <button
-                className="w-full px-4 py-3.5 flex items-center justify-between hover:bg-muted/30 active:bg-muted/50 transition-colors"
-                onClick={() => setNotificationsEnabled(!notificationsEnabled)}
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-red-500/20 to-pink-500/20 flex items-center justify-center">
-                    <Bell className="h-4 w-4 text-red-500" />
-                  </div>
-                  <span className="text-[15px] font-medium">Notifications</span>
-                </div>
-                <Switch checked={notificationsEnabled} onCheckedChange={setNotificationsEnabled} />
-              </button>
             </div>
           </div>
 
@@ -118,42 +102,6 @@ export default function Settings() {
                     <ChevronRight className="h-5 w-5 text-muted-foreground" />
                   </button>
                 </Link>
-
-                <div className="h-[0.5px] bg-border/40 mx-4" />
-
-                <button className="w-full px-4 py-3.5 flex items-center justify-between hover:bg-muted/30 active:bg-muted/50 transition-colors">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center">
-                      <Package className="h-4 w-4 text-blue-500" />
-                    </div>
-                    <span className="text-[15px] font-medium">Orders</span>
-                  </div>
-                  <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                </button>
-
-                <div className="h-[0.5px] bg-border/40 mx-4" />
-
-                <button className="w-full px-4 py-3.5 flex items-center justify-between hover:bg-muted/30 active:bg-muted/50 transition-colors">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center">
-                      <MapPin className="h-4 w-4 text-green-500" />
-                    </div>
-                    <span className="text-[15px] font-medium">Addresses</span>
-                  </div>
-                  <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                </button>
-
-                <div className="h-[0.5px] bg-border/40 mx-4" />
-
-                <button className="w-full px-4 py-3.5 flex items-center justify-between hover:bg-muted/30 active:bg-muted/50 transition-colors">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500/20 to-purple-500/20 flex items-center justify-center">
-                      <CreditCard className="h-4 w-4 text-violet-500" />
-                    </div>
-                    <span className="text-[15px] font-medium">Payment Methods</span>
-                  </div>
-                  <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                </button>
               </div>
             </div>
           )}

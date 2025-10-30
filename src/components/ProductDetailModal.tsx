@@ -106,8 +106,8 @@ export const ProductDetailModal = ({ product, onClose }: ProductDetailModalProps
 
   return (
     <Dialog open={!!product} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl max-h-[92vh] overflow-hidden p-0 bg-white shadow-2xl rounded-2xl">
-        <div className="flex flex-col h-full max-h-[92vh] overflow-y-auto">
+      <DialogContent className="max-w-xl max-h-[85vh] overflow-hidden p-0 bg-white shadow-2xl rounded-2xl">
+        <div className="flex flex-col h-full max-h-[85vh] overflow-y-auto">
           <div className="w-full px-6 pt-6 pb-4 bg-gradient-to-b from-slate-50/50 to-white">
             <div className="space-y-4">
               <div className="relative aspect-square bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 max-w-md mx-auto">
