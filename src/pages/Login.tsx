@@ -5,22 +5,24 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { authenticateUser, registerUser, saveCurrentUser, getCurrentUser } from '@/lib/mockData';
+import { signIn, signUp } from '@/lib/firebase-auth';
+import { useFirebaseAuth } from '@/contexts/FirebaseAuthContext';
 import { toast } from 'sonner';
 
 export default function Login() {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [fullName, setFullName] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { user } = useFirebaseAuth();
 
   useEffect(() => {
-    const user = getCurrentUser();
     if (user) {
-      navigate(user.role === 'admin' ? '/admin' : '/');
+      navigate('/');
     }
-  }, [navigate]);
+  }, [user, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,19 +30,22 @@ export default function Login() {
 
     try {
       if (isLogin) {
-        const user = authenticateUser(email, password);
-        if (user) {
-          saveCurrentUser(user);
+        const result = await signIn({ email, password });
+        if (!result.error) {
           toast.success('Login successful!');
-          navigate(user.role === 'admin' ? '/admin' : '/');
-        } else {
-          toast.error('Invalid email or password');
+          navigate('/');
         }
       } else {
-        const user = registerUser(email, password);
-        saveCurrentUser(user);
-        toast.success('Account created successfully!');
-        navigate('/');
+        if (!email || !password) {
+          toast.error('Please fill in all fields');
+          setLoading(false);
+          return;
+        }
+        const result = await signUp({ email, password, fullName });
+        if (!result.error) {
+          toast.success('Account created successfully!');
+          navigate('/');
+        }
       }
     } catch (error) {
       toast.error('An error occurred. Please try again.');
@@ -65,6 +70,19 @@ export default function Login() {
         </CardHeader>
         <CardContent className="space-y-6">
           <form onSubmit={handleSubmit} className="space-y-5">
+            {!isLogin && (
+              <div className="space-y-2">
+                <Label htmlFor="fullname" className="text-sm font-semibold">Full Name</Label>
+                <Input
+                  id="fullname"
+                  type="text"
+                  placeholder="Your name"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  className="h-11 rounded-xl border-2 focus-visible:ring-primary transition-all"
+                />
+              </div>
+            )}
             <div className="space-y-2">
               <Label htmlFor="email" className="text-sm font-semibold">Email Address</Label>
               <Input
@@ -89,9 +107,9 @@ export default function Login() {
                 className="h-11 rounded-xl border-2 focus-visible:ring-primary transition-all"
               />
             </div>
-            <Button 
-              type="submit" 
-              className="w-full h-11 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all" 
+            <Button
+              type="submit"
+              className="w-full h-11 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all"
               disabled={loading}
             >
               {loading ? 'Please wait...' : isLogin ? 'Sign In' : 'Sign Up'}
@@ -109,17 +127,12 @@ export default function Login() {
           </div>
 
           <div className="p-5 bg-gradient-to-br from-muted/50 to-muted rounded-xl border">
-            <p className="text-xs font-bold mb-3 text-foreground">Demo Credentials:</p>
-            <div className="space-y-2 text-xs">
-              <div className="flex items-center gap-2">
-                <Badge variant="secondary" className="text-xs">Admin</Badge>
-                <span className="text-muted-foreground">admin@priyascollection.com / admin123</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Badge variant="outline" className="text-xs">User</Badge>
-                <span className="text-muted-foreground">user@example.com / user123</span>
-              </div>
-            </div>
+            <p className="text-xs font-bold mb-3 text-foreground">Getting Started:</p>
+            <ul className="space-y-2 text-xs text-muted-foreground list-disc list-inside">
+              <li>Create a new account with your email</li>
+              <li>Set a secure password</li>
+              <li>Browse and save your favorite products</li>
+            </ul>
           </div>
         </CardContent>
       </Card>

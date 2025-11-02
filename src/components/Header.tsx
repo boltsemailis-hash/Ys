@@ -1,9 +1,9 @@
-import { Search, Heart, Settings } from 'lucide-react';
+import { Search, Heart, Settings, Package } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useState, useEffect } from 'react';
-import { getCurrentUser } from '@/lib/mockData';
+import { useFirebaseAuth } from '@/contexts/FirebaseAuthContext';
 
 interface HeaderProps {
   onSearch: (query: string) => void;
@@ -12,19 +12,7 @@ interface HeaderProps {
 
 export const Header = ({ onSearch }: HeaderProps) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [user, setUser] = useState(getCurrentUser());
-
-  useEffect(() => {
-    const handleStorageChange = () => {
-      setUser(getCurrentUser());
-    };
-    window.addEventListener('storage', handleStorageChange);
-    const interval = setInterval(handleStorageChange, 500);
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-      clearInterval(interval);
-    };
-  }, []);
+  const { user } = useFirebaseAuth();
 
   const handleSearch = (value: string) => {
     setSearchQuery(value);
@@ -63,11 +51,18 @@ export const Header = ({ onSearch }: HeaderProps) => {
 
           <div className="flex items-center gap-0.5 flex-shrink-0">
             {user && (
-              <Link to="/wishlist">
-                <Button variant="ghost" size="icon" className="relative hover:bg-primary/10 transition-all rounded-full h-8 w-8">
-                  <Heart className="h-3.5 w-3.5 text-primary" />
-                </Button>
-              </Link>
+              <>
+                <Link to="/wishlist">
+                  <Button variant="ghost" size="icon" className="relative hover:bg-primary/10 transition-all rounded-full h-8 w-8">
+                    <Heart className="h-3.5 w-3.5 text-primary" />
+                  </Button>
+                </Link>
+                <Link to="/admin">
+                  <Button variant="ghost" size="icon" className="relative hover:bg-accent/10 transition-all rounded-full h-8 w-8">
+                    <Package className="h-3.5 w-3.5 text-accent" />
+                  </Button>
+                </Link>
+              </>
             )}
             <Link to="/settings">
               <Button variant="ghost" size="icon" className="relative hover:bg-primary/10 transition-all rounded-full h-8 w-8">
